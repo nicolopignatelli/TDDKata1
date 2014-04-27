@@ -26,16 +26,16 @@ class NumberExtractor
         return $pattern;
     }
 
-    private function extractCustomDelimiter($string)
+    private function extractCustomDelimiters($string)
     {
-        if($anyLengthCustomDelimiter = $this->extractAnyLengthCustomDelimiter($string))
+        if($anyLengthCustomDelimiters = $this->extractAnyLengthCustomDelimiters($string))
         {
-            return $anyLengthCustomDelimiter;
+            return $anyLengthCustomDelimiters;
         }
 
-        if($singleCharactorCustomDelimiter = $this->extractSingleCharacterCustomDelimiter($string))
+        if($singleCharacterCustomDelimiter = $this->extractSingleCharacterCustomDelimiter($string))
         {
-            return $singleCharactorCustomDelimiter;
+            return [$singleCharacterCustomDelimiter];
         }
 
         return null;
@@ -53,13 +53,13 @@ class NumberExtractor
         return null;
     }
 
-    private function extractAnyLengthCustomDelimiter($string)
+    private function extractAnyLengthCustomDelimiters($string)
     {
-        if(preg_match("/^\/\/\[(?<delimiter>[^]]+)\]\n/", $string, $matches))
+        if(preg_match("/^\/\/(?<delimiters>(\[[^]]+\])+)+\n/", $string, $matches))
         {
-            $customDelimiter = $matches["delimiter"];
+            $customDelimiters = explode("][", trim($matches["delimiters"], "[]"));
 
-            return $customDelimiter;
+            return $customDelimiters;
         }
 
         return null;
@@ -69,9 +69,9 @@ class NumberExtractor
     {
         $delimiters = [",", "\n"];
 
-        if($customDelimiter = $this->extractCustomDelimiter($string))
+        if($customDelimiters = $this->extractCustomDelimiters($string))
         {
-            $delimiters      = array_merge([$customDelimiter], $delimiters);
+            $delimiters = array_merge($customDelimiters, $delimiters);
         }
 
         return $delimiters;

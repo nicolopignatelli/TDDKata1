@@ -70,4 +70,16 @@ class StringCalculatorTest extends \PHPUnit_Framework_TestCase
         $result = $this->calculator->add("//[***]\n1***2***3");
         $this->assertSame(6, $result);
     }
+
+    public function testAddSupportsMultipleCustomDelimiters()
+    {
+        $result = $this->calculator->add("//[*][%]\n1*2%3");
+        $this->assertSame(6, $result);
+    }
+
+    public function testAddSupportsMultipleAnyLengthCustomDelimiters()
+    {
+        $result = $this->calculator->add("//[**][%]\n1**2%3");
+        $this->assertSame(6, $result);
+    }
 }
