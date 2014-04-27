@@ -20,9 +20,9 @@ class StringCalculator
 
         $this->throwExceptionIfAnyNegativeNumber($numbers);
 
-        $sum     = array_sum($numbers);
+        $numbers = $this->sum($numbers);
 
-        return $sum;
+        return $numbers;
     }
 
     private function extractNumbers($string)
@@ -84,5 +84,23 @@ class StringCalculator
         if (count($negativeNumbers) > 0) {
             throw new Exception\NegativeNumbersNotAllowedException($negativeNumbers);
         }
+    }
+
+    private function sum($numbers)
+    {
+        $sum = 0;
+        
+        foreach ($numbers as $number) {
+            if ($this->numberIsLessThanOrEqualToOneThousand($number)) {
+                $sum += $number;
+            }
+        }
+
+        return $sum;
+    }
+
+    private function numberIsLessThanOrEqualToOneThousand($number)
+    {
+        return $number <= 1000;
     }
 }

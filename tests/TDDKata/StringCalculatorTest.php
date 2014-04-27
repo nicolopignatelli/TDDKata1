@@ -58,4 +58,10 @@ class StringCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $this->calculator->add("1,-1,-2");
     }
+
+    public function testAddIgnoreNumbersGreatherThanOneThousand()
+    {
+        $result = $this->calculator->add("2,1001");
+        $this->assertSame(2, $result);
+    }
 }
