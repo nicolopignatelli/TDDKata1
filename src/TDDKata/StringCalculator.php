@@ -17,6 +17,9 @@ class StringCalculator
         }
 
         $numbers = $this->extractNumbers($string);
+
+        $this->throwExceptionIfAnyNegativeNumber($numbers);
+
         $sum     = array_sum($numbers);
 
         return $sum;
@@ -66,5 +69,20 @@ class StringCalculator
         }
 
         return $delimiters;
+    }
+
+    private function throwExceptionIfAnyNegativeNumber($numbers)
+    {
+        $negativeNumbers = [];
+
+        foreach ($numbers as $number) {
+            if ($number < 0) {
+                $negativeNumbers[] = $number;
+            }
+        }
+
+        if (count($negativeNumbers) > 0) {
+            throw new Exception\NegativeNumbersNotAllowedException($negativeNumbers);
+        }
     }
 }

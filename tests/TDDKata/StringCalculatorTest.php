@@ -48,4 +48,14 @@ class StringCalculatorTest extends \PHPUnit_Framework_TestCase
         $result = $this->calculator->add("//;1;2");
         $this->assertSame(3, $result);
     }
+
+    public function testAddThrowsExceptionOnNegativeNumbers()
+    {
+        $this->setExpectedException(
+            'TDDKata\Exception\NegativeNumbersNotAllowedException',
+            'Negative numbers are not allowed: -1,-2')
+        ;
+
+        $this->calculator->add("1,-1,-2");
+    }
 }
