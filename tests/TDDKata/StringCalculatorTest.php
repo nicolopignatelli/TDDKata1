@@ -64,4 +64,10 @@ class StringCalculatorTest extends \PHPUnit_Framework_TestCase
         $result = $this->calculator->add("2,1001");
         $this->assertSame(2, $result);
     }
+
+    public function testAddSupportsAnyLengthCustomDelimiters()
+    {
+        $result = $this->calculator->add("//[***]\n1***2***3");
+        $this->assertSame(6, $result);
+    }
 }

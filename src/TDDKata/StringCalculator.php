@@ -4,6 +4,13 @@ namespace TDDKata;
 
 class StringCalculator
 {
+    private $extractor;
+
+    public function __construct()
+    {
+        $this->extractor = new NumberExtractor();
+    }
+
     public function add($string)
     {
         if(empty($string))
@@ -16,59 +23,13 @@ class StringCalculator
             return intval($string);
         }
 
-        $numbers = $this->extractNumbers($string);
+        $numbers = $this->extractor->extract($string);
 
         $this->throwExceptionIfAnyNegativeNumber($numbers);
 
         $numbers = $this->sum($numbers);
 
         return $numbers;
-    }
-
-    private function extractNumbers($string)
-    {
-        $delimiters = $this->getDelimiters($string);
-
-        $delimitersPattern = $this->getDelimitersPattern($delimiters);
-
-        $numbers = preg_split($delimitersPattern, $string);
-
-        return $numbers;
-    }
-
-    private function getDelimitersPattern($delimiters)
-    {
-        $escapedDelimiters = array_map(function($delimiter){
-            return preg_quote($delimiter);
-        }, $delimiters);
-
-        $pattern = "/".implode("|", $escapedDelimiters)."/";
-
-        return $pattern;
-    }
-
-    private function extractCustomDelimiter($string)
-    {
-        if(preg_match("/^\/\/(?<delimiter>[^\n])/", $string, $matches))
-        {
-            $customDelimiter = $matches["delimiter"];
-
-            return $customDelimiter;
-        }
-
-        return null;
-    }
-
-    private function getDelimiters($string)
-    {
-        $delimiters = [",", "\n"];
-
-        if($customDelimiter = $this->extractCustomDelimiter($string))
-        {
-            $delimiters      = array_merge([$customDelimiter], $delimiters);
-        }
-
-        return $delimiters;
     }
 
     private function throwExceptionIfAnyNegativeNumber($numbers)
@@ -89,7 +50,7 @@ class StringCalculator
     private function sum($numbers)
     {
         $sum = 0;
-        
+
         foreach ($numbers as $number) {
             if ($this->numberIsLessThanOrEqualToOneThousand($number)) {
                 $sum += $number;
