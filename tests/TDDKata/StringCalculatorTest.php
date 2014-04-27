@@ -30,4 +30,10 @@ class StringCalculatorTest extends \PHPUnit_Framework_TestCase
         $result = $this->calculator->add("1,2");
         $this->assertSame(3, $result);
     }
+
+    public function testAddHandlesMultipleCommaSeparatedNumbersString()
+    {
+        $result = $this->calculator->add("1,2,3");
+        $this->assertSame(6, $result);
+    }
 }

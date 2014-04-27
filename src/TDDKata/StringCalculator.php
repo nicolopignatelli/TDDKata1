@@ -16,8 +16,8 @@ class StringCalculator
             return intval($string);
         }
 
-        list($num1, $num2) = explode(",", $string);
-        $sum     = $num1 + $num2;
+        $numbers = explode(",", $string);
+        $sum     = array_sum($numbers);
 
         return $sum;
     }
