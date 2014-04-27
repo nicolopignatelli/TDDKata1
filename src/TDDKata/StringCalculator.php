@@ -16,9 +16,16 @@ class StringCalculator
             return intval($string);
         }
 
-        $numbers = explode(",", $string);
+        $numbers = $this->extractNumbers($string);
         $sum     = array_sum($numbers);
 
         return $sum;
+    }
+
+    private function extractNumbers($string)
+    {
+        $numbers = preg_split("/,|\n/", $string);
+
+        return $numbers;
     }
 }

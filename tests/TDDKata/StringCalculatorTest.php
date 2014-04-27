@@ -36,4 +36,10 @@ class StringCalculatorTest extends \PHPUnit_Framework_TestCase
         $result = $this->calculator->add("1,2,3");
         $this->assertSame(6, $result);
     }
+
+    public function testAddAllowsNewlineBetweenNumbers()
+    {
+        $result = $this->calculator->add("1\n2,3");
+        $this->assertSame(6, $result);
+    }
 }
