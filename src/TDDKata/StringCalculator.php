@@ -27,9 +27,9 @@ class StringCalculator
 
         $this->throwExceptionIfAnyNegativeNumber($numbers);
 
-        $numbers = $this->sum($numbers);
+        $sum = $this->sum($numbers);
 
-        return $numbers;
+        return $sum;
     }
 
     private function throwExceptionIfAnyNegativeNumber($numbers)
